@@ -1,0 +1,3 @@
+Por lejania prefiero utilizar el motor de plantallas ejs, por el hecho de que tiene gran similitud con html nativo. 
+    Utilizar handlebars tampoco esta mal, la canfiguaracion no toma tantas lineas de codigo y es amigable la identacion. Es muy similar a ejs.
+    En mi caso el ultimo motor que usaria es PUG ya que la identacion del HTML me parece confuso.

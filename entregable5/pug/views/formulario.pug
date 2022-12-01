@@ -1,0 +1,13 @@
+extends  layout 
+block formulario 
+
+    form(action="/productos" method="post")
+        p Nombre del producto:
+            input(type="text" name="nombre")
+        p Precio:
+            input(type="number" name="precio" )
+        p Imagen:
+            input(type="text" name="imagen" )
+        input(type="submit")
+
+    a(class="button", href="/productos") Ir a historial
