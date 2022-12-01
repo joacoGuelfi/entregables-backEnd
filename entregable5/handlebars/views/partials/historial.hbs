@@ -1,0 +1,33 @@
+<h2 style="color:crimson;">Historial</h2>
+
+{{#if tam}}
+<div class="table-responsive">
+    <table class="table table-dark">
+        <tr style="color: yellow;">
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Imagen</th>
+        </tr>
+        {{#each lista}}
+        <tr>
+            <td style="vertical-align: middle;">
+                {{this.id}}
+            </td>
+            <td style="vertical-align: middle;">
+                {{this.nombre}}
+            </td>
+            <td style="vertical-align: middle;">
+                {{this.precio}}
+            </td>
+            <td style="vertical-align: middle;"> <img style="height: 100px; width: 100px;" src={{this.imagen}} alt="">
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+</div>
+{{else}}
+<h3 class="alert alert-danger">no se encontraron datos</h1>
+    {{/if}}
+
+    <a href="/"><button class="btn btn-success mt-3 mb-5">Cargar productos</button></a>
