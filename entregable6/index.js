@@ -10,6 +10,7 @@ const io = new IO(httpServer)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static("./public"))
+app.use(express.static("./views"))
 
 
 app.set('views', './views')
@@ -22,19 +23,12 @@ const prods = productosApi.getAll()
 const PORT = 8070
 
 const messages = [
-    { author: "Servidor", text: "Bienvenidos" },
+    { author: "Servidor", text: "Bienvenidos", date: "", hour: "" },
 ]
 
 
 app.get('/', (req, res) => {
     res.render('inicio', { prods })
-})
-
-app.post('/', (req, res) => {
-    productosApi.add(req.body)
-
-
-    res.redirect('/')
 })
 
 
@@ -53,8 +47,21 @@ io.on("connection", socket => {
         //mostramos el nuevo mensaje a todos los clientes conectados
         io.sockets.emit("message", messages)
     })
-
 })
+
+io.on("connection", socketProd => {
+    console.log("Usuario conectado en productos")
+
+    socketProd.emit("prods", prods)
+    console.log(prods)
+
+    socketProd.on("new-prod", data => {
+        productosApi.add(data)
+
+        io.sockets.emit("prods", prods)
+    })
+})
+
 
 httpServer.listen(PORT, () => {
     console.log(`server OK, desde puerto ${PORT}`);

@@ -1,7 +1,7 @@
 <h1 style="color:blue;">Ingrese datos</h1>
 <br>
 
-<form action="/" method="post">
+<form onsubmit=" return addProd(this)">
 
     <div class="form-group">
         <label for="nombre"><b>Nombre del producto</b></label>
@@ -9,8 +9,8 @@
     </div>
 
     <div class="form-group">
-        <label for="apellido"><b>Precio</b></label>
-        <input id="apellido" class="form-control" type="number" name="precio">
+        <label for="precio"><b>Precio</b></label>
+        <input id="precio" class="form-control" type="number" name="precio">
     </div>
 
     <div class="form-group">
@@ -19,5 +19,7 @@
         
     </div>
 
-    <button class="btn btn-success mt-3 mb-5">Enviar</button>
+    <button type="submit" class="btn btn-success mt-3 mb-5">Enviar</button>
 </form>
+
+<script src="./js/form.js"></script>
