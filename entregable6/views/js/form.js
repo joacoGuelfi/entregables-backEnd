@@ -1,7 +1,23 @@
+const { response } = require("express")
+
 const socketProd = io.connect()
 
-function render(data) {
 
+const formProds = document.getElementById("formProds")
+formProds.addEventListener("submit", e => {
+    e.preventDefault()
+    const prodName = document.getElementById("nombre").value
+    const prodPrice = document.getElementById("precio").value
+    const prodImg = document.getElementById("imagen").value
+    const newProd = {
+        nombre: prodName,
+        precio: prodPrice,
+        imagen: prodImg
+    }
+    socket.emit("prods", newProd)
+})
+
+socket.on("prods", data => {
     const html = data.map(item => {
         return (`
         <tr>
@@ -12,27 +28,34 @@ function render(data) {
          </tr>
         `)
     }).join(" ")
+    makeHtml(html)
+})
+
+function makeHtml(prod) {
+    return fetch("../historial.ejs")
+        .then(response => response.text())
+        .then(plantilla => {
+            const template = ejs.compile(plantilla)
+            const html = template({ prod })
+            return html
+        })
+}
+
+
+
+
+
+
+
+function render(data) {
+
+
 
     document.getElementById("prods").innerHTML = html
 }
 
 
-function addProd() {
 
-    const prodName = document.getElementById("nombre").value
-    const prodPrice = document.getElementById("precio").value
-    const prodImg = document.getElementById("imagen").value
-
-    const newProd = {
-        nombre: prodName,
-        precio: prodPrice,
-        imagen: prodImg
-    }
-
-    //data al server
-    socket.emit("new-prod", newProd)
-    return false
-}
 socket.on("prods", data => {
     render(data)
 })

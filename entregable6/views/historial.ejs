@@ -2,10 +2,11 @@
 
 <% if(prods.length > 0){ %>
     <div class="table-responsive">
-        <table class="table table-dark">
+        <table id="prods" class="table table-dark">
+            <tbody id="prods">
             <tr style="color: yellow;"><th>ID</th> <th>Nombre</th> <th>Precio</th> <th>Imagen</th> </tr>
-            <span class="prods"></span>
-           
+            
+           </tbody>
         </table>
     </div>
 <% } else if(prods.length == 0) { %>

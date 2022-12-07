@@ -10,7 +10,6 @@ const io = new IO(httpServer)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static("./public"))
-app.use(express.static("./views"))
 
 
 app.set('views', './views')
@@ -19,6 +18,10 @@ app.set('view engine', 'ejs')
 const ProductosApi = require('./api/productos')
 const productosApi = new ProductosApi()
 const prods = productosApi.getAll()
+
+const ProductosFile = require("./api/prodcutosFile")
+const prodcutosFile = new ProductosFile()
+const prodFile = prodcutosFile.getAll()
 
 const PORT = 8070
 
@@ -34,7 +37,7 @@ app.get('/', (req, res) => {
 
 
 //Hanshake
-io.on("connection", socket => {
+io.on("connection", async socket => {
     console.log("Nuevo cliente conectado")
 
     //Historial
@@ -47,20 +50,26 @@ io.on("connection", socket => {
         //mostramos el nuevo mensaje a todos los clientes conectados
         io.sockets.emit("message", messages)
     })
-})
 
-io.on("connection", socketProd => {
     console.log("Usuario conectado en productos")
 
-    socketProd.emit("prods", prods)
-    console.log(prods)
 
-    socketProd.on("new-prod", data => {
-        productosApi.add(data)
+    await socket.emit("prods",)
 
-        io.sockets.emit("prods", prods)
+
+
+    socket.on("new-prod", async data => {
+
+        await prodcutosFile.save(data)
+        console.log(data)
+
+
+        await io.sockets.emit("prods", prodsFile)
+
     })
+
 })
+
 
 
 httpServer.listen(PORT, () => {
